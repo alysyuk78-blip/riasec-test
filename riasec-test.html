@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Тест RIASEC — профорієнтація за Голландом</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#ffffff; --gray:#f5f5f7; --ink:#1d1d1f; --muted:#86868b; --line:#d2d2d7;
+    --blue:#0071e3; --blue-press:#0077ed;
+    --R:#3b7ea8; --I:#12a0a0; --A:#8a4fd6; --S:#e8607f; --E:#e2960f; --C:#38a06a;
+    --sf:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Inter","Helvetica Neue",Helvetica,Arial,sans-serif;
+    --r:18px;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0;background:var(--bg);color:var(--ink);
+    font-family:var(--sf);line-height:1.5;
+    -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+    letter-spacing:-.01em;
+  }
+  .wrap{max-width:800px;margin:0 auto;padding:40px 22px 100px}
+  h1,h2,h3{font-family:var(--sf);font-weight:600;letter-spacing:-.022em;margin:0}
+  .eyebrow{font-size:12px;font-weight:600;letter-spacing:.02em;color:var(--muted)}
+  a{color:var(--blue);text-decoration:none}
+
+  .btn{
+    font-family:var(--sf);font-weight:500;font-size:16px;border:none;cursor:pointer;
+    background:var(--blue);color:#fff;padding:12px 24px;border-radius:980px;transition:.2s;
+    letter-spacing:-.01em;
+  }
+  .btn:hover{background:var(--blue-press)}
+  .btn:active{transform:scale(.985)}
+  .btn.ghost{background:transparent;color:var(--blue);padding:12px 8px}
+  .btn.ghost:hover{background:transparent;opacity:.7}
+  .actions{display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin:30px 0 4px}
+  .meta-label{font-size:14px;color:var(--muted);padding:12px 8px}
+
+  /* ---------- INTRO ---------- */
+  .hero{text-align:center;padding:26px 0 8px}
+  .hero .eyebrow{color:var(--blue);font-size:15px;font-weight:600}
+  .hero h1{font-size:clamp(36px,7vw,56px);line-height:1.05;font-weight:600;margin:.28em auto .3em;max-width:16ch}
+  .hero .sub{font-size:clamp(19px,3.4vw,24px);color:var(--muted);font-weight:400;max-width:36ch;margin:0 auto;letter-spacing:-.015em}
+  .hexad-strip{display:flex;gap:8px;justify-content:center;margin:34px auto 0;max-width:320px}
+  .hexad-strip span{height:5px;flex:1;border-radius:5px;opacity:.9}
+
+  .panel{background:var(--gray);border-radius:var(--r);padding:34px 32px}
+  @media(max-width:600px){.panel{padding:26px 20px}}
+  .intro-body{margin-top:44px}
+  .lead{font-size:19px;color:var(--ink);font-weight:400;letter-spacing:-.016em;margin:0 0 4px}
+  .lead b{font-weight:600}
+  .types6{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border-radius:14px;overflow:hidden;margin:26px 0 6px}
+  @media(max-width:600px){.types6{grid-template-columns:1fr 1fr}}
+  .tchip{background:var(--bg);padding:16px 15px}
+  .tchip .dot{width:9px;height:9px;border-radius:50%;display:inline-block;vertical-align:1px;margin-right:8px}
+  .tchip b{font-weight:600;font-size:15px}
+  .tchip small{display:block;color:var(--muted);font-size:13px;margin-top:4px;line-height:1.4}
+  .howto{font-size:15px;color:var(--muted);margin:26px 0 0;line-height:1.6}
+  .howto b{color:var(--ink);font-weight:600}
+  .src{font-size:12.5px;color:var(--muted);line-height:1.6;margin-top:28px;padding-top:22px;border-top:1px solid var(--line)}
+  .src b{color:var(--ink);font-weight:600}
+
+  /* ---------- PROGRESS ---------- */
+  .topbar{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.8);backdrop-filter:saturate(180%) blur(20px);
+    -webkit-backdrop-filter:saturate(180%) blur(20px);padding:14px 0 12px;margin-bottom:14px}
+  .pbar{height:5px;background:#e8e8ed;border-radius:5px;overflow:hidden}
+  .pfill{height:100%;background:var(--blue);width:0;transition:width .35s ease}
+  .pmeta{display:flex;justify-content:space-between;font-size:13px;color:var(--muted);margin-top:9px;font-weight:500}
+
+  /* ---------- QUESTIONS ---------- */
+  .qintro{font-size:15px;color:var(--muted);margin:4px 2px 20px;font-weight:400}
+  .qintro b{color:var(--ink);font-weight:600}
+  .q{padding:22px 0;border-bottom:1px solid var(--line)}
+  .q:first-child{padding-top:6px}
+  .qtext{font-size:17px;font-weight:500;margin-bottom:16px;letter-spacing:-.016em}
+  .qtext .n{color:var(--muted);font-weight:500;margin-right:9px;font-variant-numeric:tabular-nums}
+  .scale{display:flex;gap:8px}
+  @media(max-width:560px){.scale{gap:6px}}
+  .opt{flex:1;text-align:center;border:1px solid var(--line);border-radius:12px;padding:11px 4px;cursor:pointer;
+    background:var(--bg);transition:.15s;user-select:none}
+  .opt:hover{border-color:#b0b0b8;background:var(--gray)}
+  .opt:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+  .opt .em{width:28px;height:28px;display:block;margin:0 auto;object-fit:contain}
+  .opt .lb{font-size:11px;color:var(--muted);margin-top:5px;line-height:1.2}
+  .opt.sel{background:var(--blue);border-color:var(--blue);color:#fff}
+  .opt.sel .lb{color:rgba(255,255,255,.85)}
+  .opt .em-fb{width:28px;height:28px;display:block;margin:0 auto;line-height:28px;font-size:22px;color:var(--ink)}
+  .opt.sel .em-fb{color:#fff}
+  .pagenav{display:flex;justify-content:space-between;gap:12px;margin-top:26px;align-items:center}
+  .warnmsg{color:var(--S);font-size:14px;font-weight:500;margin-top:16px;display:none;text-align:center}
+
+  /* ---------- RESULTS ---------- */
+  .code-hero{text-align:center;padding:20px 0 8px}
+  .code-hero .eyebrow{font-size:15px;color:var(--muted);font-weight:600}
+  .bigcode{font-size:clamp(64px,17vw,120px);font-weight:600;letter-spacing:-.03em;line-height:1;margin:10px 0 6px;display:flex;justify-content:center;gap:2px}
+  .bigcode span{display:inline-block}
+  .codeword{color:var(--muted);font-size:clamp(18px,3.2vw,22px);font-weight:400;max-width:42ch;margin:6px auto 0;letter-spacing:-.015em}
+
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:30px}
+  @media(max-width:720px){.grid2{grid-template-columns:1fr}}
+  .sect{padding:28px 26px}
+  .sect .eyebrow{display:block;margin-bottom:14px;font-size:13px}
+
+  .hexwrap{display:flex;justify-content:center;padding:4px 0 0}
+  .bars{margin-top:0}
+  .bar{display:flex;align-items:center;gap:14px;margin:15px 0}
+  .bar:first-child{margin-top:2px}
+  .bar .letter{width:30px;height:30px;border-radius:9px;color:#fff;font-weight:600;
+    display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:15px}
+  .bar .body{flex:1;min-width:0}
+  .bar .body .top{display:flex;justify-content:space-between;font-size:14px;margin-bottom:6px;align-items:baseline}
+  .bar .body .top b{font-weight:500}
+  .bar .body .top .val{font-weight:600;color:var(--muted);font-variant-numeric:tabular-nums;font-size:13px}
+  .track{height:6px;background:#e8e8ed;border-radius:6px;overflow:hidden}
+  .track i{display:block;height:100%;border-radius:6px;width:0;transition:width .9s cubic-bezier(.2,.7,.2,1)}
+
+  .interp{padding:32px 30px}
+  @media(max-width:600px){.interp,.sect{padding:24px 20px}}
+  .interp .eyebrow{display:block;margin-bottom:14px;font-size:13px}
+  .interp .lead2{font-size:19px;color:var(--ink);font-weight:400;letter-spacing:-.016em;margin:0}
+  .interp .lead2 b{font-weight:600}
+
+  .rel{margin-top:24px;padding-top:24px;border-top:1px solid var(--line)}
+  .rel h3{font-size:17px;font-weight:600;margin:0 0 12px;display:flex;justify-content:space-between;align-items:baseline}
+  .rel h3 .pc{font-variant-numeric:tabular-nums;text-transform:capitalize}
+  .gauge{height:6px;background:#e8e8ed;border-radius:6px;overflow:hidden;margin:0 0 14px}
+  .gauge i{display:block;height:100%;border-radius:6px;width:0;transition:width 1s cubic-bezier(.2,.7,.2,1)}
+  .rel p{margin:0;font-size:15px;color:var(--muted);line-height:1.6}
+  .rel p b{color:var(--ink);font-weight:600}
+
+  .prolist{margin:0;padding:0;list-style:none}
+  .prolist li{padding:16px 0;border-bottom:1px solid var(--line);font-size:16px}
+  .prolist li:last-child{border-bottom:none}
+  .prolist li b{font-weight:600;font-size:16px;letter-spacing:-.016em}
+  .prolist li small{display:block;color:var(--muted);font-size:14px;margin-top:3px;line-height:1.45}
+  .prolist li .pill{float:right;color:var(--muted);font-size:12px;font-weight:600;margin-top:2px;margin-left:10px}
+  .note{font-size:13px;color:var(--muted);margin-top:18px;line-height:1.55}
+  .disclaimer{font-size:13px;color:var(--muted);background:var(--gray);border-radius:var(--r);padding:22px 24px;margin-top:22px;line-height:1.65}
+  .disclaimer b{color:var(--ink);font-weight:600}
+  .foot-actions{display:flex;gap:6px;flex-wrap:wrap;margin-top:26px;justify-content:center}
+  .stack{margin-top:14px}
+  .hide{display:none!important}
+  @media print{
+    .topbar,.pagenav,.foot-actions{display:none!important}
+    .wrap{padding:0}
+    .panel{break-inside:avoid;background:var(--gray)!important}
+    *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ============ SCREEN 1: INTRO ============ -->
+  <section id="intro">
+    <div class="hero">
+      <span class="eyebrow">Профорієнтація</span>
+      <h1>Тест інтересів RIASEC</h1>
+      <p class="sub">Науковий метод, що допомагає зрозуміти, які заняття й професії підходять тобі найбільше.</p>
+      <div class="hexad-strip">
+        <span style="background:var(--R)"></span><span style="background:var(--I)"></span>
+        <span style="background:var(--A)"></span><span style="background:var(--S)"></span>
+        <span style="background:var(--E)"></span><span style="background:var(--C)"></span>
+      </div>
+    </div>
+
+    <div class="panel intro-body">
+      <p class="lead">Модель описує інтереси людини через <b>6 типів</b>. Провідні 2–3 утворюють <b>«код Голланда»</b> — він показує середовища й професії, у яких людина працює із задоволенням і найкращим результатом.</p>
+
+      <div class="types6">
+        <div class="tchip"><b><span class="dot" style="background:var(--R)"></span>R · Реалістичний</b><small>Техніка, руки, інструменти, конструкції.</small></div>
+        <div class="tchip"><b><span class="dot" style="background:var(--I)"></span>I · Дослідницький</b><small>Аналіз, дані, наука, логіка.</small></div>
+        <div class="tchip"><b><span class="dot" style="background:var(--A)"></span>A · Артистичний</b><small>Дизайн, креатив, контент.</small></div>
+        <div class="tchip"><b><span class="dot" style="background:var(--S)"></span>S · Соціальний</b><small>Люди, навчання, команда.</small></div>
+        <div class="tchip"><b><span class="dot" style="background:var(--E)"></span>E · Підприємницький</b><small>Бізнес, продажі, лідерство, вплив.</small></div>
+        <div class="tchip"><b><span class="dot" style="background:var(--C)"></span>C · Організаційний</b><small>Порядок, цифри, системи, облік.</small></div>
+      </div>
+
+      <p class="howto"><b>Як проходити.</b> Нижче — 60 конкретних занять. По кожному познач, наскільки воно тобі подобається. <b>Не думай</b> про потрібну освіту, майбутню зарплату чи те, чи вмієш ти це вже робити — важливо лише, чи хотілося б тобі цим займатися. Відповідай швидко, першою реакцією. Це ~10 хвилин.</p>
+
+      <div class="src"><b>Наукова основа.</b> Питання — це офіційний набір <b>O*NET Interest Profiler Short Form</b> (Rounds, Su, Lewis &amp; Rivkin, 2010), розроблений Національним центром розвитку O*NET для Міністерства праці США. Інструмент у суспільному надбанні; побудований на моделі RIASEC Голланда (1997). Шкала відповідей — «подобається / не подобається», як в оригіналі.</div>
+
+      <div class="actions">
+        <button class="btn" onclick="start()">Почати тест</button>
+        <span class="meta-label">60 запитань · результат одразу</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SCREEN 2: TEST ============ -->
+  <section id="test" class="hide">
+    <div class="topbar">
+      <div class="pbar"><div class="pfill" id="pfill"></div></div>
+      <div class="pmeta"><span id="pcount">0 / 60</span><span id="ppage">Блок 1 із 5</span></div>
+    </div>
+    <div class="qintro">Наскільки тобі <b>сподобалося б</b> це робити?</div>
+    <div id="qlist"></div>
+    <div class="warnmsg" id="warn">Дай відповідь на всі запитання блоку, щоб продовжити.</div>
+    <div class="pagenav">
+      <button class="btn ghost" id="prevBtn" onclick="prevPage()">Назад</button>
+      <button class="btn" id="nextBtn" onclick="nextPage()">Далі</button>
+    </div>
+  </section>
+
+  <!-- ============ SCREEN 3: RESULTS ============ -->
+  <section id="results" class="hide"></section>
+
+</div>
+
+<script>
+/* ---------------- DATA ---------------- */
+const TYPES = {
+  R:{name:"Реалістичний",hex:"#3b7ea8",
+     blurb:"Ти у своїй стихії, коли працюєш руками, з технікою й матеріалами, і бачиш конкретний результат."},
+  I:{name:"Дослідницький",hex:"#12a0a0",
+     blurb:"Тобі цікаво розбиратися, аналізувати й розв'язувати складні задачі — зрозуміти, як усе влаштовано."},
+  A:{name:"Артистичний",hex:"#8a4fd6",
+     blurb:"Тебе тягне до творчості, дизайну й самовираження — генерувати ідеї та створювати нове."},
+  S:{name:"Соціальний",hex:"#e8607f",
+     blurb:"Твоя сила — люди: навчати, допомагати, вести за собою в команді, розуміти чужі потреби."},
+  E:{name:"Підприємницький",hex:"#e2960f",
+     blurb:"Тобі важливий результат і вплив: переконувати, продавати, керувати, запускати й масштабувати."},
+  C:{name:"Організаційний",hex:"#38a06a",
+     blurb:"Ти цінуєш порядок, точність і систему: цифри, облік, чіткі процеси й стабільні механізми."}
+};
+const ORDER = ["R","I","A","S","E","C"];
+
+const ITEMS = [
+  ["R","Виготовляти кухонні шафи"],
+  ["R","Класти цеглу або плитку"],
+  ["I","Розробляти нові ліки"],
+  ["I","Досліджувати способи зменшення забруднення води"],
+  ["A","Писати книжки або п'єси"],
+  ["A","Грати на музичному інструменті"],
+  ["S","Навчати людину комплексу вправ"],
+  ["S","Допомагати людям з особистими чи емоційними проблемами"],
+  ["E","Купувати й продавати акції та облігації"],
+  ["E","Керувати роздрібним магазином"],
+  ["C","Створювати електронну таблицю в комп'ютерній програмі"],
+  ["C","Вичитувати записи або бланки на помилки"],
+  ["R","Ремонтувати побутову техніку"],
+  ["R","Розводити рибу в рибному господарстві"],
+  ["I","Проводити хімічні експерименти"],
+  ["I","Вивчати рух планет"],
+  ["A","Складати або аранжувати музику"],
+  ["A","Малювати картини"],
+  ["S","Надавати людям поради щодо вибору професії"],
+  ["S","Проводити реабілітаційну терапію"],
+  ["E","Керувати салоном краси або перукарнею"],
+  ["E","Керувати відділом у великій компанії"],
+  ["C","Встановлювати програми у велику комп'ютерну мережу"],
+  ["C","Працювати з калькулятором"],
+  ["R","Збирати електронні деталі"],
+  ["R","Керувати вантажівкою, розвозячи посилки в офіси й додому"],
+  ["I","Досліджувати зразки крові під мікроскопом"],
+  ["I","Розслідувати причину пожежі"],
+  ["A","Створювати спецефекти для фільмів"],
+  ["A","Розписувати декорації для вистав"],
+  ["S","Волонтерити в неприбутковій організації"],
+  ["S","Навчати дітей грати у спортивні ігри"],
+  ["E","Заснувати власний бізнес"],
+  ["E","Вести переговори щодо ділових контрактів"],
+  ["C","Вести облік відвантажень і надходжень"],
+  ["C","Нараховувати заробітну плату працівникам"],
+  ["R","Перевіряти якість деталей перед відвантаженням"],
+  ["R","Ремонтувати й встановлювати замки"],
+  ["I","Розробляти спосіб точніше прогнозувати погоду"],
+  ["I","Працювати в біологічній лабораторії"],
+  ["A","Писати сценарії для фільмів або телешоу"],
+  ["A","Виконувати джаз або степ"],
+  ["S","Навчати жестової мови людей із порушеннями слуху"],
+  ["S","Допомагати проводити сеанс групової терапії"],
+  ["E","Представляти клієнта в судовому процесі"],
+  ["E","Виводити на ринок нову лінію одягу"],
+  ["C","Проводити інвентаризацію запасів портативним пристроєм"],
+  ["C","Реєструвати орендні платежі"],
+  ["R","Налагоджувати верстати й керувати ними для виготовлення продукції"],
+  ["R","Гасити лісові пожежі"],
+  ["I","Винайти замінник цукру"],
+  ["I","Проводити лабораторні аналізи для виявлення хвороб"],
+  ["A","Співати в музичному гурті"],
+  ["A","Монтувати фільми"],
+  ["S","Доглядати за дітьми в дитячому садку"],
+  ["S","Викладати у старших класах школи"],
+  ["E","Продавати товари у великому магазині"],
+  ["E","Керувати магазином одягу"],
+  ["C","Вести облік складських запасів"],
+  ["C","Штампувати, сортувати й розподіляти пошту в організації"]
+];
+
+const PRO = {
+  R:[["Інженерія та виробництво","механіка, електрика, будівництво, енергетика"],
+     ["Техніка й ремонт","обслуговування машин, обладнання, транспорту"],
+     ["Робототехніка й автоматизація","дрони, ЧПК, розумні системи","ростуча"]],
+  I:[["Наука й дослідження","біологія, хімія, фізика, медицина"],
+     ["Аналітика та Data Science","дані, статистика, дослідження","ростуча"],
+     ["AI та розробка ПЗ","алгоритми, штучний інтелект, інженерія","ростуча"],
+     ["Кібербезпека","захист систем і даних","ростуча"]],
+  A:[["Дизайн","графіка, UX/UI, продукт, інтер'єр"],
+     ["Медіа й контент","відео, фото, анімація","ростуча"],
+     ["Мистецтво й творчі індустрії","музика, письмо, реклама"]],
+  S:[["Освіта й навчання","викладання, наставництво, edtech"],
+     ["Психологія та допомога","консультування, соціальна робота"],
+     ["Медицина й догляд","сестринство, реабілітація, сервіс"],
+     ["HR і робота з людьми","підбір і розвиток команд"]],
+  E:[["Бізнес і підприємництво","власна справа, стартапи"],
+     ["Менеджмент і продажі","керування, переговори, розвиток"],
+     ["Маркетинг і реклама","digital, бренд, performance","ростуча"],
+     ["Право й лідерські ролі","публічні та керівні позиції"]],
+  C:[["Фінанси й бухоблік","облік, аудит, банківська справа"],
+     ["FinTech і аналітика даних","фінтех, звітність, метрики","ростуча"],
+     ["Адміністрування й логістика","процеси, операції, документообіг"]]
+};
+
+const UNI = {
+  E:[["076 · Підприємництво та торгівля","власна справа, продажі"],
+     ["075 · Маркетинг","реклама, бренд, digital-продажі"],
+     ["073 · Менеджмент","керування командами та проєктами"]],
+  I:[["122 · Комп'ютерні науки","дані, AI, аналітика"],
+     ["121 · Інженерія програмного забезпечення","розробка продуктів"],
+     ["125 · Кібербезпека та захист інформації","захист систем і даних"],
+     ["051 · Економіка","аналітичне ядро для бізнесу"]],
+  R:[["131 · Прикладна механіка","конструкції, виробництво"],
+     ["133 · Галузеве машинобудування","обладнання й техніка"],
+     ["151 · Автоматизація та комп'ютерно-інтегровані технології","автоматика, розумні системи"],
+     ["141 · Електроенергетика, електротехніка та електромеханіка","енергетика й електрика"]],
+  A:[["022 · Дизайн","візуальні та цифрові продукти"],
+     ["061 · Журналістика","медіа, реклама, комунікації"]],
+  S:[["053 · Психологія","розуміння людей, консультування"],
+     ["011 · Освітні, педагогічні науки","навчання, edtech"],
+     ["073 · Менеджмент","люди й команди"]],
+  C:[["072 · Фінанси, банківська справа та страхування","гроші й облік"],
+     ["071 · Облік і оподаткування","системи та звітність"]]
+};
+
+/* ---------------- STATE ---------------- */
+let answers = new Array(ITEMS.length).fill(null);
+const PER = 12;
+const PAGES = Math.ceil(ITEMS.length/PER);
+let page = 0;
+const EBASE="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.1.0/assets/svg/";
+const SCALE = [["1f641","Точно ні","○"],["1f615","Скоріше ні","◔"],["1f610","Не знаю","◑"],["1f642","Скоріше так","◕"],["1f929","Точно так","●"]];
+function emojiFail(img,glyph){
+  const s=document.createElement("span");
+  s.className="em em-fb"; s.setAttribute("aria-hidden","true"); s.textContent=glyph;
+  if(img.parentNode) img.parentNode.replaceChild(s,img);
+}
+
+/* ---------------- FLOW ---------------- */
+function start(){
+  document.getElementById("intro").classList.add("hide");
+  document.getElementById("test").classList.remove("hide");
+  page=0; renderPage(); window.scrollTo(0,0);
+}
+function pageBounds(){ const s=page*PER; return [s, Math.min(s+PER, ITEMS.length)]; }
+
+function renderPage(){
+  const list=document.getElementById("qlist"); list.innerHTML="";
+  const [s,e]=pageBounds();
+  for(let i=s;i<e;i++){
+    const [t,txt]=ITEMS[i];
+    const q=document.createElement("div");
+    q.className="q"; q.id="q"+i;
+    let opts="";
+    for(let v=1;v<=5;v++){
+      const sel=answers[i]===v?" sel":"";
+      opts+=`<div class="opt${sel}" onclick="pick(${i},${v})" role="button" tabindex="0"
+              aria-label="${SCALE[v-1][1]}" aria-pressed="${answers[i]===v}"
+              onkeydown="if(event.key==='Enter'||event.key===' '){pick(${i},${v});event.preventDefault()}">
+              <img class="em" src="${EBASE}${SCALE[v-1][0]}.svg" alt="" width="28" height="28" loading="lazy" draggable="false" onerror="emojiFail(this,'${SCALE[v-1][2]}')"><span class="lb">${SCALE[v-1][1]}</span></div>`;
+    }
+    q.innerHTML=`<div class="qtext"><span class="n">${i+1}</span>${txt}</div><div class="scale">${opts}</div>`;
+    list.appendChild(q);
+  }
+  document.getElementById("ppage").textContent=`Блок ${page+1} із ${PAGES}`;
+  document.getElementById("prevBtn").style.visibility = page===0 ? "hidden":"visible";
+  document.getElementById("nextBtn").textContent = page===PAGES-1 ? "Показати результат":"Далі";
+  document.getElementById("warn").style.display="none";
+  updateProgress();
+}
+function pick(i,v){
+  answers[i]=v;
+  const q=document.getElementById("q"+i);
+  q.querySelectorAll(".opt").forEach((o,idx)=>{
+    const on=idx===v-1;
+    o.classList.toggle("sel",on);
+    o.setAttribute("aria-pressed",on);
+  });
+  updateProgress();
+}
+function updateProgress(){
+  const done=answers.filter(a=>a!==null).length;
+  document.getElementById("pcount").textContent=`${done} / ${ITEMS.length}`;
+  document.getElementById("pfill").style.width=(done/ITEMS.length*100)+"%";
+}
+function pageComplete(){
+  const [s,e]=pageBounds();
+  for(let i=s;i<e;i++) if(answers[i]===null) return false;
+  return true;
+}
+function nextPage(){
+  if(!pageComplete()){
+    document.getElementById("warn").style.display="block";
+    const [s,e]=pageBounds();
+    for(let i=s;i<e;i++) if(answers[i]===null){document.getElementById("q"+i).scrollIntoView({behavior:"smooth",block:"center"});break;}
+    return;
+  }
+  if(page===PAGES-1){ showResults(); return; }
+  page++; renderPage(); window.scrollTo({top:0,behavior:"smooth"});
+}
+function prevPage(){ if(page>0){page--; renderPage(); window.scrollTo({top:0,behavior:"smooth"});} }
+
+/* ---------------- SCORING ----------------
+   Кожен тип нормалізується за власною кількістю пунктів:
+   мін.бал = n*1, макс = n*5 → pct = (raw - n) / (n*4) * 100  ∈ [0,100] */
+function score(){
+  const raw={R:0,I:0,A:0,S:0,E:0,C:0}, cnt={R:0,I:0,A:0,S:0,E:0,C:0};
+  ITEMS.forEach((it,i)=>{ raw[it[0]]+=(answers[i]||0); cnt[it[0]]++; });
+  const pct={};
+  for(const k of ORDER){ const n=cnt[k]||1; pct[k]=Math.round((raw[k]-n)/(n*4)*100); }
+  return {raw,pct,cnt};
+}
+
+/* ---------------- HEXAGON ---------------- */
+function hexagonSVG(pct){
+  const cx=150,cy=145,maxR=100;
+  const ang=i=>(-90+i*60)*Math.PI/180;
+  let rings="";
+  [0.25,0.5,0.75,1].forEach(f=>{
+    const p=ORDER.map((k,i)=>(cx+Math.cos(ang(i))*maxR*f)+","+(cy+Math.sin(ang(i))*maxR*f)).join(" ");
+    rings+=`<polygon points="${p}" fill="none" stroke="#e8e8ed" stroke-width="1"/>`;
+  });
+  let axes="";
+  ORDER.forEach((k,i)=>{axes+=`<line x1="${cx}" y1="${cy}" x2="${cx+Math.cos(ang(i))*maxR}" y2="${cy+Math.sin(ang(i))*maxR}" stroke="#e8e8ed" stroke-width="1"/>`;});
+  const prof=ORDER.map((k,i)=>{const f=Math.max(pct[k],0)/100;return (cx+Math.cos(ang(i))*maxR*f)+","+(cy+Math.sin(ang(i))*maxR*f);}).join(" ");
+  let dots="",labels="";
+  ORDER.forEach((k,i)=>{
+    const f=Math.max(pct[k],0)/100;
+    const dx=cx+Math.cos(ang(i))*maxR*f, dy=cy+Math.sin(ang(i))*maxR*f;
+    dots+=`<circle cx="${dx}" cy="${dy}" r="4" fill="${TYPES[k].hex}"/>`;
+    const lx=cx+Math.cos(ang(i))*(maxR+24), ly=cy+Math.sin(ang(i))*(maxR+24);
+    labels+=`<text x="${lx}" y="${ly+6}" text-anchor="middle" font-family="var(--sf)" font-weight="600" font-size="17" fill="${TYPES[k].hex}">${k}</text>`;
+  });
+  return `<svg viewBox="0 0 300 290" width="300" height="290" style="width:100%;max-width:300px;height:auto" role="img" aria-label="Профіль на гексагоні Голланда">
+    ${rings}${axes}
+    <polygon points="${prof}" fill="rgba(29,29,31,.05)" stroke="#1d1d1f" stroke-width="1.5"/>
+    ${dots}${labels}
+  </svg>`;
+}
+
+/* ---------------- RESULTS ---------------- */
+function showResults(){
+  const {pct}=score();
+  const ranked=[...ORDER].sort((a,b)=>pct[b]-pct[a]); // стабільне сортування; рівні бали → порядок RIASEC
+  const top=ranked[0], second=ranked[1];
+  const codeword=ranked.slice(0,3).map(k=>TYPES[k].name).join(" · ");
+
+  // диференціація (надійність результату)
+  const vals=ORDER.map(k=>pct[k]);
+  const spread=Math.max(...vals)-Math.min(...vals);
+  const sortedVals=[...vals].sort((a,b)=>b-a);
+  const gap3=sortedVals[2]-sortedVals[3]; // між 3-м і 4-м місцем
+  let tier,relColor,relPct,relText;
+  if(spread<15){
+    tier="низька"; relColor="var(--S)"; relPct=Math.max(8,Math.round(spread/15*38));
+    relText="Інтереси виражені майже рівномірно, тому код <b>орієнтовний</b>. Пройди тест ще раз, відповідаючи рішучіше (менше «Байдуже»), і спирайся передусім на реальний досвід.";
+  } else if(spread<32){
+    tier="середня"; relColor="var(--E)"; relPct=Math.round(38+(spread-15)/17*34);
+    relText="Провідні типи видно, але різниця між близькими невелика. Орієнтуйся насамперед на <b>топ-2</b>, а точну третю літеру сприймай як умовну.";
+  } else {
+    tier="висока"; relColor="var(--C)"; relPct=Math.min(100,Math.round(72+(spread-32)/40*28));
+    relText="Інтереси чітко диференційовані — цьому коду можна довіряти як <b>орієнтиру</b> для вибору напряму.";
+  }
+  if(gap3<=2 && spread>=15) relText+=" Кілька типів на межі топ-3 майже однакові, тож звертай увагу на групу, а не на єдину літеру.";
+
+  document.getElementById("test").classList.add("hide");
+  const R=document.getElementById("results"); R.classList.remove("hide");
+
+  let bars="";
+  ranked.forEach(k=>{
+    bars+=`<div class="bar">
+      <div class="letter" style="background:${TYPES[k].hex}">${k}</div>
+      <div class="body"><div class="top"><b>${TYPES[k].name}</b><span class="val">${pct[k]}%</span></div>
+      <div class="track"><i data-w="${pct[k]}" style="background:${TYPES[k].hex}"></i></div></div></div>`;
+  });
+
+  let proHTML="";
+  ranked.slice(0,3).forEach(k=>PRO[k].forEach(([n,d,tag])=>{
+    proHTML+=`<li>${tag?`<span class="pill">${tag}</span>`:""}<b>${n}</b><small>${d}</small></li>`;
+  }));
+
+  let uni=[],seen=new Set();
+  ranked.slice(0,3).forEach(k=>UNI[k]&&UNI[k].forEach(u=>{if(!seen.has(u[0])){seen.add(u[0]);uni.push(u);}}));
+  let uniHTML=uni.slice(0,6).map(u=>`<li><b>${u[0]}</b><small>${u[1]}</small></li>`).join("");
+
+  const combo=`Твоя провідна пара — <b>${TYPES[top].name}</b> + <b>${TYPES[second].name}</b>. ${TYPES[top].blurb} ${TYPES[second].blurb}`;
+
+  R.innerHTML=`
+    <div class="code-hero">
+      <span class="eyebrow">Твій код Голланда</span>
+      <div class="bigcode">${ranked.slice(0,3).map(k=>`<span style="color:${TYPES[k].hex}">${k}</span>`).join("")}</div>
+      <div class="codeword">${codeword}</div>
+    </div>
+
+    <div class="grid2">
+      <div class="panel sect"><span class="eyebrow">Профіль по 6 типах</span><div class="hexwrap">${hexagonSVG(pct)}</div></div>
+      <div class="panel sect"><span class="eyebrow">Рейтинг інтересів</span><div class="bars">${bars}</div></div>
+    </div>
+
+    <div class="panel interp stack">
+      <span class="eyebrow">Що це означає</span>
+      <p class="lead2">${combo}</p>
+      <div class="rel">
+        <h3>Надійність результату <span class="pc" style="color:${relColor}">${tier}</span></h3>
+        <div class="gauge"><i data-w="${relPct}" style="background:${relColor}"></i></div>
+        <p>${relText}</p>
+      </div>
+    </div>
+
+    <div class="panel interp stack">
+      <span class="eyebrow">Напрями, що підходять</span>
+      <ul class="prolist">${proHTML}</ul>
+    </div>
+
+    <div class="panel interp stack">
+      <span class="eyebrow">Куди вступати · напрями підготовки</span>
+      <ul class="prolist">${uniHTML}</ul>
+      <div class="note">Коди й назви наведено за чинним переліком спеціальностей МОН і є орієнтовними. Актуальні напрями, коди та умови вступу перевіряй на vstup.osvita.ua або на сайті обраного університету.</div>
+    </div>
+
+    <div class="disclaimer">
+      <b>Важливо.</b> Тест вимірює <b>інтереси</b>, а не здібності, оцінки чи «правильність» вибору. Це валідований інструмент (Holland, 1997; O*NET, Міністерство праці США), але він дає орієнтир, а не остаточну відповідь. Результат — це початок розмови, а не діагноз: обговори його з батьками, учителем або шкільним психологом і перевір на практиці (проєкти, стажування, спроби в реальних заняттях). Найнадійніше — пройти тест двічі з інтервалом у кілька днів і порівняти.
+    </div>
+
+    <div class="foot-actions">
+      <button class="btn" onclick="window.print()">Зберегти</button>
+      <button class="btn ghost" onclick="restart()">Пройти заново</button>
+    </div>
+  `;
+  window.scrollTo(0,0);
+  requestAnimationFrame(()=>{R.querySelectorAll("[data-w]").forEach(el=>{el.style.width=el.getAttribute("data-w")+"%";});});
+}
+function restart(){
+  answers=new Array(ITEMS.length).fill(null); page=0;
+  document.getElementById("results").classList.add("hide");
+  document.getElementById("results").innerHTML="";
+  document.getElementById("intro").classList.remove("hide");
+  window.scrollTo(0,0);
+}
+</script>
+</body>
+</html>
