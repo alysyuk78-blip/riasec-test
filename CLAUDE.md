@@ -48,8 +48,11 @@
 
 ## Хостинг / git
 - Репозиторій: https://github.com/alysyuk78-blip/riasec-test (публічний, гілка `main`).
-- Живий тест (GitHub Pages, корінь гілки `main`): https://alysyuk78-blip.github.io/riasec-test/
-- Деплой автоматичний: `git push` у `main` → Pages пересбирає за ~1 хв.
+- GitHub Pages (корінь гілки `main`): https://alysyuk78-blip.github.io/riasec-test/
+  - Деплой авто: `git push` у `main` → Pages пересбирає за ~1 хв.
+- Vercel (проєкт `riasec-test`, статичний): https://riasec-test-ten.vercel.app
+  - Деплой у прод вручну: `npx vercel@latest --prod --yes` з кореня проєкту.
+  - `.vercelignore` виключає з сайту `CLAUDE.md`, `.gitignore`, `.git`.
 
 ## Як запускати / тестувати
 - Відкрити `index.html` у браузері.
