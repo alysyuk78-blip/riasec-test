@@ -155,6 +155,11 @@
   .foot-actions{display:flex;gap:6px;flex-wrap:wrap;margin-top:26px;justify-content:center}
   .stack{margin-top:14px}
   .hide{display:none!important}
+  /* Вбудовування / білий лейбл: керується query-параметрами (див. код у кінці сторінки) */
+  .brandline{display:none;text-align:center;font-size:12.5px;color:var(--muted);
+    padding:30px 0 0;line-height:1.5}
+  .brandline.on{display:block}
+  html.embed .wrap{padding-top:22px;padding-bottom:60px}
   @media print{
     .topbar,.pagenav,.foot-actions{display:none!important}
     .wrap{padding:0}
@@ -219,6 +224,8 @@
 
   <!-- ============ SCREEN 3: RESULTS ============ -->
   <section id="results" class="hide"></section>
+
+  <div class="brandline" id="brandline"></div>
 
 </div>
 
@@ -563,6 +570,27 @@ function restart(){
   document.getElementById("intro").classList.remove("hide");
   window.scrollTo(0,0);
 }
+
+/* ---------------- ВБУДОВУВАННЯ / БІЛИЙ ЛЕЙБЛ ----------------
+   Керується query-параметрами — сам тест лишається публічним і статичним:
+   ?embed=1            — режим для <iframe> (менші відступи зверху/знизу)
+   ?brand=Назва        — рядок «Надано: Назва» унизу (екранується)
+   ?accent=%23RRGGBB   — свій колір акценту замість синього (кнопки, шкала, прогрес) */
+(function(){
+  const p=new URLSearchParams(location.search);
+  if(p.get("embed")==="1") document.documentElement.classList.add("embed");
+  const accent=p.get("accent");
+  if(accent && /^#[0-9a-fA-F]{6}$/.test(accent)){
+    document.documentElement.style.setProperty("--blue",accent);
+    document.documentElement.style.setProperty("--blue-press",accent);
+  }
+  const brand=(p.get("brand")||"").trim().slice(0,80);
+  if(brand){
+    const el=document.getElementById("brandline");
+    el.textContent="Надано: "+brand;   // textContent екранує будь-який ввід
+    el.classList.add("on");
+  }
+})();
 </script>
 </body>
 </html>
