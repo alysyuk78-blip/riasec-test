@@ -90,6 +90,17 @@
   .opt.sel .lb{color:rgba(255,255,255,.85)}
   .opt .em-fb{width:28px;height:28px;display:block;margin:0 auto;line-height:28px;font-size:22px;color:var(--ink)}
   .opt.sel .em-fb{color:#fff}
+  /* Якірні підписи шкали — лише на вузьких екранах (замість підпису під кожним емодзі) */
+  .scale-ends{display:none;justify-content:space-between;margin-top:9px;padding:0 3px;
+    font-size:12px;color:var(--muted);font-weight:500}
+  @media(max-width:520px){
+    .q{padding:17px 0}
+    .qtext{font-size:16px;margin-bottom:13px}
+    .opt{padding:13px 4px;border-radius:11px}
+    .opt .lb{display:none}
+    .opt .em,.opt .em-fb{width:26px;height:26px}
+    .scale-ends{display:flex}
+  }
   .pagenav{display:flex;justify-content:space-between;gap:12px;margin-top:26px;align-items:center}
   .warnmsg{color:var(--S);font-size:14px;font-weight:500;margin-top:16px;display:none;text-align:center}
 
@@ -373,7 +384,8 @@ function renderPage(){
               onkeydown="if(event.key==='Enter'||event.key===' '){pick(${i},${v});event.preventDefault()}">
               <img class="em" src="${EBASE}${SCALE[v-1][0]}.svg" alt="" width="28" height="28" loading="lazy" draggable="false" onerror="emojiFail(this,'${SCALE[v-1][2]}')"><span class="lb">${SCALE[v-1][1]}</span></div>`;
     }
-    q.innerHTML=`<div class="qtext"><span class="n">${i+1}</span>${txt}</div><div class="scale">${opts}</div>`;
+    q.innerHTML=`<div class="qtext"><span class="n">${i+1}</span>${txt}</div><div class="scale">${opts}</div>`+
+      `<div class="scale-ends" aria-hidden="true"><span>${SCALE[0][1]}</span><span>${SCALE[4][1]}</span></div>`;
     list.appendChild(q);
   }
   document.getElementById("ppage").textContent=`Блок ${page+1} із ${PAGES}`;
